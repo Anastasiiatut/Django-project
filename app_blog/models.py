@@ -12,6 +12,12 @@ class Category(models.Model):
         verbose_name_plural = u'Категорії для новин'
     def __str__(self):
         return self.category
+    def get_absolute_url(self):
+        try:
+            url = reverse('articles-category-list', kwargs={'slug': self.slug})
+        except:
+            url = '/'
+        return url
 
 class Article(models.Model):
     title = models.CharField(u'Заголовок', max_length=250, help_text=u'Максимум 250 символів')
@@ -32,7 +38,7 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         try:
-            url = reverse('news - detail', kwargs={'year': self.pub_date.year, 'month': self.pub_date.strftime('%m'), 'day': self.pub_date.strftime('%d'), 'slug': self.slug})
+            url = reverse('article-detail', kwargs={'year': self.pub_date.year, 'month': self.pub_date.strftime('%m'), 'day': self.pub_date.strftime('%d'), 'slug': self.slug})
         except:
             url = '/'
         return url
